@@ -2,9 +2,8 @@
    Salomon Smeke Cohen - ssmeke.io
    clrs irl
 
-   This code is designed to be relatively easy to read and
+   This program is designed to be relatively easy to read and
    perform well. Not to be modular or easy to adapt.
-
 */
 
 #include <Adafruit_GFX.h>
@@ -28,29 +27,34 @@
 
 byte MPIN = 0;
 byte XPPIN = 0;
-byte YPPIN = 0;
+byte YPPIN = 1;
 byte CYCLEBUF = 0;
 byte CYCLETICK = 0;
 float POTDEAD = 511 * .3;
-byte tl[] = {0, 0, 0};
-byte tr[] = {0, 0, 0};
-byte bl[] = {0, 0, 0};
-byte br[] = {0, 0, 0};
+byte tl[3] = {100, 0, 0};
+byte tr[3] = {0, 100, 0};
+byte bl[3] = {0, 0, 100};
+byte br[3] = {10, 10 ,10};
+//21 bytes
 
 Adafruit_NeoMatrix matrix = Adafruit_NeoMatrix(8, 8, MPIN,
-                            NEO_MATRIX_TOP + NEO_MATRIX_RIGHT +
+                            NEO_MATRIX_TOP + NEO_MATRIX_LEFT +
                             NEO_MATRIX_COLUMNS + NEO_MATRIX_PROGRESSIVE);
+//?? bytes
 
 void setup()  {
   initMatrix();
   pinMode(XPPIN, OUTPUT);
   pinMode(YPPIN, OUTPUT);
+  
 }
 
 void loop()  {
-  byte mask = potDir();
-  mask = bufferedInput(mask, 10);
+  byte mask = bufferedInput(potDir(), 10);
   if (mask == B1010 || mask == B1001 || mask == B0110 || mask == B0101) {
+    if (mask){
+      Serial.print(mask);
+    }
     select(mask);
     //draw
     //refresh
@@ -74,35 +78,31 @@ void select(byte mask) {
     corner = tr;
   }
   if (mask == B0101) {
-    xoff = 4;
     yoff = 4;
     corner = bl;
   }
   if (mask == B1001) {
+    xoff = 4;
     yoff = 4;
     corner = br;
   }
-  
   clearMatrix();
-  setQuarter(xoff, yoff, *corner, *(corner + 1), *(corner + 2));
-  refresh();
-  
   while (menuTimeOut) {
-    input = bufferedInput(potDir(), 3);
+    input = bufferedInput(potDir(), 10);
     if (!input) {
       menuTimeOut--;
     } else {
       switch (input) {
-        case B10:
-          *(corner + pos) += 5;
+        case B0010:
+          *(corner + pos) += 3;
           break;
-        case B01:
-          *(corner + pos) -= 5;
+        case B0001:
+          *(corner + pos) -= 3;
           break;
-        case B1000:
+        case B0100:
           if (pos != 2) pos++;
           break;
-        case B100:
+        case B1000:
           if (pos) pos--;
           break;
       }
@@ -171,6 +171,7 @@ byte potDir() {
   if (x + POTDEAD < 0) {
     res |= B0100;
   }
+  Serial.print(res);
   return res;
 }
 
@@ -188,7 +189,7 @@ void setQuarter(byte xoff, byte yoff, byte r, byte g, byte b) {
 
 void initMatrix() {
   matrix.begin();
-  matrix.fillScreen(color(127, 127, 127));
+  matrix.fillScreen(color(20, 20, 20));
   refresh();
 }
 
