@@ -31,11 +31,10 @@ byte YPPIN = 1;
 byte CYCLEBUF = 0;
 byte CYCLETICK = 0;
 float POTDEAD = 511 * .3;
-byte tl[3] = {100, 0, 0};
-byte tr[3] = {0, 100, 0};
-byte bl[3] = {0, 0, 100};
+byte tl[3] = {255, 0, 0};
+byte tr[3] = {0, 255, 0};
+byte bl[3] = {0, 0, 255};
 byte br[3] = {10, 10 ,10};
-//21 bytes
 
 Adafruit_NeoMatrix matrix = Adafruit_NeoMatrix(8, 8, MPIN,
                             NEO_MATRIX_TOP + NEO_MATRIX_LEFT +
@@ -52,14 +51,42 @@ void setup()  {
 void loop()  {
   byte mask = bufferedInput(potDir(), 10);
   if (mask == B1010 || mask == B1001 || mask == B0110 || mask == B0101) {
-    if (mask){
-      Serial.print(mask);
-    }
     select(mask);
-    //draw
-    //refresh
+    draw();
+    refresh();
   }
   delay(10);
+}
+
+void draw() {
+  byte l[8][3];
+  byte r[8][3];
+  interval(tl, bl, l);
+  interval(tr, br, r);
+  
+  byte scanLine[8][3];
+  for (byte y = 0; y < 8; y++) {
+    interval(l[y], r[y], scanLine);
+    for (byte x = 0; x < 8; x++) {
+      setPixel(x, y, scanLine[x][0], scanLine[x][1], scanLine[x][2]);
+    }
+  }
+}
+
+void interval(byte src[3], byte tgt[3], byte intervals[8][3]){
+  double factorR = stepFactor(src[0], tgt[0]);
+  double factorG = stepFactor(src[1], tgt[1]);
+  double factorB = stepFactor(src[2], tgt[2]);
+
+  for (byte i = 0; i < 8; i++){
+    intervals[i][0] = src[0] + (factorR * i);
+    intervals[i][1] = src[1] + (factorG * i);
+    intervals[i][2] = src[2] + (factorB * i);
+  }
+}
+
+double stepFactor(byte src, byte tgt){
+  return (double) (tgt-src) / 7.0;
 }
 
 void select(byte mask) {
@@ -92,19 +119,17 @@ void select(byte mask) {
     if (!input) {
       menuTimeOut--;
     } else {
-      switch (input) {
-        case B0010:
-          *(corner + pos) += 3;
-          break;
-        case B0001:
-          *(corner + pos) -= 3;
-          break;
-        case B0100:
-          if (pos != 2) pos++;
-          break;
-        case B1000:
-          if (pos) pos--;
-          break;
+      if (input == B0010 && (int)(*(corner + pos)) + 3 <= 255){
+        *(corner + pos) += 3;
+      }
+      if (input == B0001 && (int)(*(corner + pos)) - 3 >= 0){
+        *(corner + pos) -= 3;
+      }
+      if (input == B0100 && pos != 2){
+        pos ++;
+      }
+      if (input == B0100 && pos){
+        pos --;
       }
       setQuarter(xoff, yoff, *corner, *(corner + 1), *(corner + 2));
       refresh();
@@ -171,7 +196,6 @@ byte potDir() {
   if (x + POTDEAD < 0) {
     res |= B0100;
   }
-  Serial.print(res);
   return res;
 }
 
