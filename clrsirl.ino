@@ -15,7 +15,6 @@ val CYCLETICK = 0;
 val mode = 0;
 
 void setup()  {
-
 }
 
 void loop()  {

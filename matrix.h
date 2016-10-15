@@ -19,10 +19,7 @@ void setPixel(byte x, byte y, RGB c) { matrix.drawPixel(x, y, rtoc(c)); }
 
 void setSection(byte xoff, byte yoff, byte xlen, byte ylen, RGB c)
 {
-  xlen += xoff;
-  ylen += yoff;
-  for (byte y = yoff; y < ylen; y++)
-  { for (byte x = xoff; x < xlen; x++) { setPixel(x, y, c); } }
+  matrix.fillRect(xoff, yoff, xlen, ylen, rtoc(c));
 }
 
 void clearMatrix() { matrix.fillScreen(BLACK); }
