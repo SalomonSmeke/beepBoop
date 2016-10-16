@@ -37,6 +37,37 @@ Given that many of these modules are similar, the idea of submodules is not unap
 
 This is a single threaded application, so there are some intricacies with input. And this button creates some additional difficulties.
 
+####Input Handling
+
+There are two main challenges with input handling and one extension that I can think of. The data we get from a potentiometer is unstructured and raw. It does not account for inaccuracies in current and therefore measurement, inaccuracies in the potentiometer and innacuracies in the user.
+
+The first two can be somewhat addressed with a dead zone. adding a straight percentage dead zone, however, creates a strange square dead zone, not round. This is very easy to implement, but creates a bias against diagonals.
+
+With this in mind, it is not necessary to check if a vertical direction was a "part" of a diagonal. Since diagonals wont occur unless severely sought, direct comparisons ( == ) are preferred to includes ( & ) for single direction queries.
+
+Additionally, we can introduce buffered inputs.
+
+So far, an input request can be:
+
+Direct - Not Recommended.
+Dead-zoned - Better.
+Buffered - Preferred.
+
+As such, lets not implement a facade for direct information, just Dead-zoned and Buffered. Thankfully this is basically what is implemented now: 
+
+BufferedInput <- Buffer
+PotDir <- Direction
+
+However, it would be helpful to have a third helper we can provide with "directions we are looking for". these would ideally be ==.
+
+Furthermore, once an input has been selected once, the Buffer is less necessary.
+
+UserInput <- facade. (byte[] matches, sensitivity)
+
+Our previous scheme was: 00[UNUSED]00[UNUSED]00[X]00[Y]
+
+lets use the unused bits for intensity in V2. The scheme will work for now.
+
 ####Modules
 
 Modules cannot be added to a list and run, C is not functional. However, Modules CAN be a one line add.
@@ -47,3 +78,8 @@ lets make a screen for each module. some visual element that makes it obvious.
 Modules Interface ->
 menu screen. Animated? (V2, maybe)
 loop.
+creepage color.
+
+#####Loading Modules
+
+Selection creepage.
