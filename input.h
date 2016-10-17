@@ -60,6 +60,14 @@ val bufferedInput(val mask, val sensitivity)
   return 0;
 }
 
+/*
+   userInput(val matches[], val matchCount, val sensitivity, val speedUp = 0)
+   : Returns either mask or 0, if the input has been the same
+   : for given sensitivity and the input matches an accepted input.
+   : reduces sensitivity by speedUp after a sucessful match.
+   : WARNING, RESET BASETICK TO 0 BEFORE A SEPARATE BUFFERED INPUT LOOP OCCURS.
+*/
+
 val userInput(val matches[], val matchCount, val sensitivity, val speedUp = 0)
 {
   val guard = B11111111;
