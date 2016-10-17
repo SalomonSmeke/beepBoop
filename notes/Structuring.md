@@ -83,3 +83,17 @@ creepage color.
 #####Loading Modules
 
 Selection creepage.
+
+#####Module Structure
+
+Loop()
+SentinelCheck()
+
+Example multi level module:
+
+Module A Loop {
+	Module B Loop {
+		Sentinel() <- Block button until un ticked.
+	}
+	Sentinel()
+}
