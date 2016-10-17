@@ -2,7 +2,7 @@
    Salomon Smeke Cohen - ssmeke.io
    constants -> clrsirl
 
-   handy named frequesnt values.
+   handy named frequent values.
 */
 
 val pUP = B0010; //Up potentiometer
@@ -15,4 +15,3 @@ val pTL = pUP | pL;
 val pTR = pUP | pR;
 val pBL = pDN | pL;
 val pBR = pDN | pR;
-

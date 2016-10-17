@@ -7,13 +7,6 @@
 #include <Adafruit_NeoPixel.h>
 #include "loader.h"
 
-RGB cornerColors[2][2];
-
-val CYCLEBUF = 0;
-val CYCLETICK = 0;
-
-val mode = 0;
-
 void setup()
 {
 

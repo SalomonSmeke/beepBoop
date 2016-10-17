@@ -53,10 +53,10 @@ Direct - Not Recommended.
 Dead-zoned - Better.
 Buffered - Preferred.
 
-As such, lets not implement a facade for direct information, just Dead-zoned and Buffered. Thankfully this is basically what is implemented now: 
+As such, lets not implement a facade for direct information, just Dead-zoned and Buffered. Thankfully this is basically what is implemented now:
 
 BufferedInput <- Buffer
-PotDir <- Direction
+ReadDir <- Direction
 
 However, it would be helpful to have a third helper we can provide with "directions we are looking for". these would ideally be ==.
 
@@ -72,7 +72,7 @@ lets use the unused bits for intensity in V2. The scheme will work for now.
 
 Modules cannot be added to a list and run, C is not functional. However, Modules CAN be a one line add.
 
-ModuleLoader -> 
+ModuleLoader ->
 Loads modules.
 lets make a screen for each module. some visual element that makes it obvious.
 Modules Interface ->
