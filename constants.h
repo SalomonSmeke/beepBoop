@@ -5,13 +5,13 @@
    handy named frequent values.
 */
 
-val pUP = B0010; //Up potentiometer
-val pDN = B0001; //Down potentiometer
-val pL = B0100; //Left potentiometer
-val pR = B1000; //Right potentiometer
+const val pUP = B0010; //Up potentiometer
+const val pDN = B0001; //Down potentiometer
+const val pL = B0100; //Left potentiometer
+const val pR = B1000; //Right potentiometer
 
 //Composite directions (corners)
-val pTL = pUP | pL;
-val pTR = pUP | pR;
-val pBL = pDN | pL;
-val pBR = pDN | pR;
+const val pTL = pUP | pL;
+const val pTR = pUP | pR;
+const val pBL = pDN | pL;
+const val pBR = pDN | pR;

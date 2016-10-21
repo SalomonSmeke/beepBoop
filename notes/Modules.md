@@ -10,6 +10,6 @@
 ####Icon: a number 4 with a box of color.
 ####Load Color: Purple
 
-##Palletes
-###Icon: One expanding pallete |·<
+##Palettes
+###Icon: One expanding palette |·<
 ###Load Color: Tea

@@ -23,13 +23,13 @@
 
 val readDir()
 {
-  short x = analogRead(XPOT_PIN) - 512;
-  short y = analogRead(YPOT_PIN) - 512;
+  int16_t x = analogRead(XPOT_PIN) - 512;
+  int16_t y = analogRead(YPOT_PIN) - 512;
   val res = 0;
-  if (y - POTDEAD > 0) { res |= B10; }
-  if (y + POTDEAD < 0) { res |= B01; }
-  if (x - POTDEAD > 0) { res |= B1000; }
-  if (x + POTDEAD < 0) { res |= B0100; }
+  if (y - POTDEAD > 0) res |= B10;
+  if (y + POTDEAD < 0) res |= B01;
+  if (x - POTDEAD > 0) res |= B1000;
+  if (x + POTDEAD < 0) res |= B0100;
   return res;
 }
 
@@ -51,7 +51,7 @@ val bufferedInput(val mask, val sensitivity)
       CYCLETICK = BASETICK;
       CYCLEBUF = 0;
       return mask;
-    } else { CYCLETICK++; }
+    } else CYCLETICK++;
   } else
   {
     CYCLEBUF = mask;
@@ -72,8 +72,42 @@ val userInput(val matches[], val matchCount, val sensitivity, val speedUp = 0)
 {
   val guard = B11111111;
   val out = bufferedInput(readDir(), sensitivity);
-  for (val i = 0; i < matchCount; i++) { if (out == matches[i]) { guard = 0; } }
+  for (val i = 0; i < matchCount; ++i) if (out == matches[i]) guard = 0;
   out &= guard;
-  if (out) { BASETICK = speedUp; } else { BASETICK = 0; }
+  out ? BASETICK = speedUp : BASETICK = 0;
+  return out;
+}
+
+/*
+   readButton()
+   : Return the value of the home button.
+   [STUB]
+*/
+val readButton()
+{
+  return 0;
+}
+
+/*
+   debounceTickDown()
+   : Tick the debounce home button down.
+*/
+val debounceTickDown() { if (HOMEDEBOUNCE) HOMEDEBOUNCE--; }
+
+/*
+   debouncedHomePress(val timeout)
+   : Returns either true or false (in the form of data or nothing) based on home
+   : button press and if a debounce tickout has been met.
+*/
+val debouncedHomePress(val timeout)
+{
+  val out = 0;
+  //READ -> yes.
+  //Debounce timer = timeout.
+  if (!HOMEDEBOUNCE)
+  {
+    out = readButton();
+    if (out) HOMEDEBOUNCE = timeout;
+  } else debounceTickDown();
   return out;
 }

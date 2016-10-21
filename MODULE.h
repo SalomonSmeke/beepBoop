@@ -1,15 +1,16 @@
 /*
    Salomon Smeke Cohen - ssmeke.io
-   RGB -> clrsirl
+   MODULE -> clrsirl
 
-   helpful RGB class for color storage.
+   module class for app-like behaviour.
 */
 
-class RGB
+class MODULE
 {
   public:
-    RGB();
+    MODULE();
     RGB(val r, val g, val b);
+    void run();
     val arr[3];
     val R();
     val G();
@@ -19,9 +20,14 @@ class RGB
     void B(val c);
 };
 
-RGB::RGB(){}
+MODULE::MODULE(){}
 
-RGB::RGB(val r, val g, val b) { arr[0] = r; arr[1] = g; arr[2] = b; }
+RGB::RGB(val r, val g, val b)
+{
+  arr[0] = r;
+  arr[1] = g;
+  arr[2] = b;
+}
 
 val RGB::R() { return arr[0]; }
 

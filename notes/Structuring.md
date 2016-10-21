@@ -97,3 +97,8 @@ Module A Loop {
 	}
 	Sentinel()
 }
+
+#####Dead Man switch
+
+Arduino feature we should use because im bad at memory allocation.
+We can also use it to reset if no input is ever detected.
