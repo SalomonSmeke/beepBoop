@@ -1,6 +1,6 @@
 /*
    Salomon Smeke Cohen - ssmeke.io
-   loader -> clrsirl
+   loader -> beepBoop
 
    Proper dependency ordering loading and instance variable creation.
 */

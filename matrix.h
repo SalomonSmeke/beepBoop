@@ -1,6 +1,6 @@
 /*
    Salomon Smeke Cohen - ssmeke.io
-   matrix -> clrsirl
+   matrix -> beepBoop
 
    Matrix facade.
 */

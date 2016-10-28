@@ -1,6 +1,6 @@
 /*
    Salomon Smeke Cohen - ssmeke.io
-   constants -> clrsirl
+   constants -> beepBoop
 
    handy named frequent values.
 */

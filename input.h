@@ -1,6 +1,6 @@
 /*
    Salomon Smeke Cohen - ssmeke.io
-   input -> clrsirl
+   input -> beepBoop
 
    input handling functionality.
 */

@@ -1,6 +1,6 @@
 /*
    Salomon Smeke Cohen - ssmeke.io
-   MODULE -> clrsirl
+   MODULE -> beepBoop
 
    module class for app-like behaviour.
 */

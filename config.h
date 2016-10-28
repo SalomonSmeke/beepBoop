@@ -1,6 +1,6 @@
 /*
    Salomon Smeke Cohen - ssmeke.io
-   config -> clrsirl
+   config -> beepBoop
 
    configurable variables.
 */

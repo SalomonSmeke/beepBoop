@@ -1,6 +1,6 @@
 /*
    Salomon Smeke Cohen - ssmeke.io
-   RGB -> clrsirl
+   RGB -> beepBoop
 
    helpful RGB class for color storage.
 */

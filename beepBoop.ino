@@ -1,6 +1,6 @@
 /*
    Salomon Smeke Cohen - ssmeke.io
-   clrs irl
+   beepBoop
 */
 #include "loader.h"
 
